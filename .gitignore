@@ -1,3 +1,78 @@
+<<<<<<< HEAD
+# Use glob syntax.
+syntax: glob
+*.class
+*~
+*.bak
+*.old
+
+# Logs
+*.log
+
+# Eclipse conf file
+.settings/
+.settings
+
+# Building
+target
+tmp*
+dist
+
+# Other scm
+.svn
+.CVS
+.hg*
+.classpath
+.project*
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+.cproject
+
+# Java annotation processor (APT)
+.factorypath
+
+# PDT-specific (PHP Development Tools)
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# Tern plugin
+.tern-project
+
+# TeXlipse plugin
+.texlipse
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Code Recommenders
+.recommenders/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+.cache-main
+.scala_dependencies
+.worksheet
+=======
 # Compiled class file
 *.class
 
@@ -20,3 +95,4 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+>>>>>>> 901f1c8c94ec478f24a8d9a6dbf7fd97ce28be7f

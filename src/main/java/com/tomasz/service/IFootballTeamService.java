@@ -5,7 +5,8 @@ import com.tomasz.domain.FootballTeam;
 
 public interface IFootballTeamService {
 	public int addFootballTeam(FootballTeam footballTeam);
+
 	public void removeAllFootballTeams();
+
 	public List<FootballTeam> getAllFootballTeams();
-	//public int updateFootballTeam(FootballTeam footballTeam);
 }

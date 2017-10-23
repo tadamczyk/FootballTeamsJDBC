@@ -33,8 +33,7 @@ public class FootballTeamService implements IFootballTeamService {
 			}
 			if (!tableExists)
 				statement.executeUpdate(createTableFootballTeam);
-			addFootballTeamStmt = connection
-					.prepareStatement("INSERT INTO FootballTeam(name, yoe, value) VALUES(?, ?, ?)");
+			addFootballTeamStmt = connection.prepareStatement("INSERT INTO FootballTeam(name, yoe, value) VALUES(?, ?, ?)");
 			removeAllFootballTeamsStmt = connection.prepareStatement("DELETE FROM FootballTeam");
 			getAllFootballTeamsStmt = connection.prepareStatement("SELECT id, name, yoe, value FROM FootballTeam");
 		} catch (SQLException e) {

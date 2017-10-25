@@ -1,8 +1,6 @@
 package com.footballteam.service;
 
 import static org.junit.Assert.*;
-
-import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import com.footballteam.domain.FootballTeam;
@@ -28,6 +26,33 @@ public class FootballTeamServiceTest {
   }
 
   @Test
+  public void checkGetAllFootballTeams() {
+    List<FootballTeam> footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam footballTeamRetrieved = footballTeams.get(0);
+    assertEquals(footballTeams.get(0).getName(), footballTeamRetrieved.getName());
+    assertEquals(footballTeams.get(0).getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
+    assertEquals(footballTeams.get(0).getMarketValue(), footballTeamRetrieved.getMarketValue(), 0.01);
+  }
+
+  @Test
+  public void checkUpdateFootballTeamName() {
+    int result = footballTeamService.updateFootballTeamName(FCL, "Legia Warszawa");
+    assertEquals(1, result);
+  }
+
+  @Test
+  public void checkUpdateFootballTeamYearOfEstablished() {
+    int result = footballTeamService.updateFootballTeamYearOfEstablished(FCL, 1916);
+    assertEquals(1, result);
+  }
+
+  @Test
+  public void checkUpdateFootballTeamMarketValue() {
+    int result = footballTeamService.updateFootballTeamMarketValue(FCL, 16000000.01);
+    assertEquals(1, result);
+  }
+
+  @Test
   public void checkRemoveFootballTeamByName() {
     int result = footballTeamService.removeFootballTeamByName(MU.getName());
     assertEquals(1, result);
@@ -50,11 +75,9 @@ public class FootballTeamServiceTest {
     FootballTeam footballTeamRetrieved = footballTeamService.findByMarketValue(FCL.getMarketValue());
     assertEquals(FCL.getMarketValue(), footballTeamRetrieved.getMarketValue(), 0.01);
   }
-
   /*
    * @After public void checkRemoveAllFootballTeams() {
-   * footballTeamService.removeAllFootballTeams(); assertEquals(Arrays.asList(),
+   * footballTeamService.removeAllFootballTeams(); assertEquals(1,
    * footballTeamService.getAllFootballTeams()); }
    */
-
 }

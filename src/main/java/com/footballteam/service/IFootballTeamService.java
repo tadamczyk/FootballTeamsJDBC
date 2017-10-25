@@ -1,7 +1,6 @@
 package com.footballteam.service;
 
 import java.util.List;
-
 import com.footballteam.domain.FootballTeam;
 
 public interface IFootballTeamService {
@@ -9,11 +8,11 @@ public interface IFootballTeamService {
 
   public List<FootballTeam> getAllFootballTeams();
 
-  public void updateFootballTeamName(FootballTeam footballTeam, String name);
+  public int updateFootballTeamName(FootballTeam footballTeam, String name);
 
-  public void updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished);
+  public int updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished);
 
-  public void updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue);
+  public int updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue);
 
   public int removeAllFootballTeams();
 

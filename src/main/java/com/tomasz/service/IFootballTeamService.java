@@ -8,11 +8,11 @@ public interface IFootballTeamService {
 
   public List<FootballTeam> getAllFootballTeams();
 
-  public void updateNameFootballTeam(FootballTeam footballTeam, String name);
+  public void updateFootballTeamName(FootballTeam footballTeam, String name);
 
-  public void updateYearOfEstablishedFootballTeam(FootballTeam footballTeam, int yearOfEstablished);
+  public void updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished);
 
-  public void updateMarketValueFootballTeam(FootballTeam footballTeam, double marketValue);
+  public void updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue);
 
   public void removeAllFootballTeams();
 

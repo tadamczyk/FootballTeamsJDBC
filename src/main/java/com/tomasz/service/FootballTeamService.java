@@ -18,9 +18,9 @@ public class FootballTeamService implements IFootballTeamService {
       + "yearOfEstablished integer, marketValue real)";
   private PreparedStatement addFootballTeamStmt;
   private PreparedStatement getAllFootballTeamsStmt;
-  private PreparedStatement updateNameFootballTeamStmt;
-  private PreparedStatement updateYearOfEstablishedFootballTeamStmt;
-  private PreparedStatement updateMarketValueFootballTeamStmt;
+  private PreparedStatement updateFootballTeamNameStmt;
+  private PreparedStatement updateFootballTeamYearOfEstablishedStmt;
+  private PreparedStatement updateFootballTeamMarketValueStmt;
   private PreparedStatement removeAllFootballTeamsStmt;
   private PreparedStatement removeFootballTeamByIdStmt;
   private PreparedStatement removeFootballTeamByNameStmt;
@@ -34,10 +34,10 @@ public class FootballTeamService implements IFootballTeamService {
     try {
       connection = DriverManager.getConnection(url);
       statement = connection.createStatement();
-      ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
+      ResultSet resultSet = connection.getMetaData().getTables(null, null, null, null);
       boolean tableExists = false;
-      while (rs.next()) {
-        if ("FootballTeam".equalsIgnoreCase(rs.getString("TABLE_NAME"))) {
+      while (resultSet.next()) {
+        if ("FootballTeam".equalsIgnoreCase(resultSet.getString("TABLE_NAME"))) {
           tableExists = true;
           break;
         }
@@ -48,10 +48,10 @@ public class FootballTeamService implements IFootballTeamService {
           .prepareStatement("INSERT INTO FootballTeam(name, yearOfEstablished, marketValue) VALUES(?, ?, ?)");
       getAllFootballTeamsStmt = connection
           .prepareStatement("SELECT id, name, yearOfEstablished, marketValue FROM FootballTeam");
-      updateNameFootballTeamStmt = connection.prepareStatement("UPDATE FootballTeam SET name = ? WHERE id = ?");
-      updateYearOfEstablishedFootballTeamStmt = connection
+      updateFootballTeamNameStmt = connection.prepareStatement("UPDATE FootballTeam SET name = ? WHERE id = ?");
+      updateFootballTeamYearOfEstablishedStmt = connection
           .prepareStatement("UPDATE FootballTeam SET yearOfEstablished = ? WHERE id = ?");
-      updateMarketValueFootballTeamStmt = connection
+      updateFootballTeamMarketValueStmt = connection
           .prepareStatement("UPDATE FootballTeam SET marketValue = ? WHERE id = ?");
       removeAllFootballTeamsStmt = connection.prepareStatement("DELETE FROM FootballTeam");
       removeFootballTeamByIdStmt = connection.prepareStatement("DELETE FROM FootballTeam WHERE id = ?");
@@ -91,37 +91,19 @@ public class FootballTeamService implements IFootballTeamService {
   public List<FootballTeam> getAllFootballTeams() {
     List<FootballTeam> footballTeams = new ArrayList<FootballTeam>();
     try {
-      ResultSet rs = getAllFootballTeamsStmt.executeQuery();
-      while (rs.next()) {
-        FootballTeam ft = new FootballTeam();
-        ft.setId(rs.getInt("id"));
-        ft.setName(rs.getString("name"));
-        ft.setYearOfEstablished(rs.getInt("yearOfEstablished"));
-        ft.setMarketValue(rs.getDouble("marketValue"));
-        footballTeams.add(ft);
+      ResultSet resultSet = getAllFootballTeamsStmt.executeQuery();
+      while (resultSet.next()) {
+        FootballTeam footballTeam = new FootballTeam();
+        footballTeam.setId(resultSet.getInt("id"));
+        footballTeam.setName(resultSet.getString("name"));
+        footballTeam.setYearOfEstablished(resultSet.getInt("yearOfEstablished"));
+        footballTeam.setMarketValue(resultSet.getDouble("marketValue"));
+        footballTeams.add(footballTeam);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
     return footballTeams;
-  }
-
-  @Override
-  public void updateNameFootballTeam(FootballTeam footballTeam, String name) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateYearOfEstablishedFootballTeam(FootballTeam footballTeam, int yearOfEstablished) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateMarketValueFootballTeam(FootballTeam footballTeam, double marketValue) {
-    // TODO Auto-generated method stub
-
   }
 
   @Override
@@ -147,7 +129,7 @@ public class FootballTeamService implements IFootballTeamService {
 
   @Override
   public FootballTeam findById(long id) {
-    FootballTeam ft = null;
+    FootballTeam footballTeam = null;
     try {
       findByIdStmt.setLong(1, id);
       ResultSet resultSet = findByIdStmt.executeQuery();
@@ -155,63 +137,82 @@ public class FootballTeamService implements IFootballTeamService {
         String name = resultSet.getString("name");
         int yearOfEstablished = resultSet.getInt("yearOfEstablished");
         double marketValue = resultSet.getDouble("marketValue");
-        ft = new FootballTeam(name, yearOfEstablished, marketValue);
+        footballTeam = new FootballTeam(name, yearOfEstablished, marketValue);
+      } else {
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return ft;
+    return footballTeam;
   }
 
   @Override
   public FootballTeam findByName(String name) {
-    FootballTeam ft = null;
+    FootballTeam footballTeam = null;
     try {
       findByNameStmt.setString(1, name);
-      ResultSet resultSet = findByIdStmt.executeQuery();
+      ResultSet resultSet = findByNameStmt.executeQuery();
       if (resultSet.next()) {
         int yearOfEstablished = resultSet.getInt("yearOfEstablished");
         double marketValue = resultSet.getDouble("marketValue");
-        ft = new FootballTeam(name, yearOfEstablished, marketValue);
+        footballTeam = new FootballTeam(name, yearOfEstablished, marketValue);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return ft;
+    return footballTeam;
   }
 
   @Override
   public FootballTeam findByYearOfEstablished(int yearOfEstablished) {
-    FootballTeam ft = null;
+    FootballTeam footballTeam = null;
     try {
       findByYearOfEstablishedStmt.setInt(1, yearOfEstablished);
-      ResultSet resultSet = findByIdStmt.executeQuery();
+      ResultSet resultSet = findByYearOfEstablishedStmt.executeQuery();
       if (resultSet.next()) {
         String name = resultSet.getString("name");
         double marketValue = resultSet.getDouble("marketValue");
-        ft = new FootballTeam(name, yearOfEstablished, marketValue);
+        footballTeam = new FootballTeam(name, yearOfEstablished, marketValue);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return ft;
+    return footballTeam;
   }
 
   @Override
   public FootballTeam findByMarketValue(double marketValue) {
-    FootballTeam ft = null;
+    FootballTeam footballTeam = null;
     try {
       findByMarketValueStmt.setDouble(1, marketValue);
-      ResultSet resultSet = findByIdStmt.executeQuery();
+      ResultSet resultSet = findByMarketValueStmt.executeQuery();
       if (resultSet.next()) {
         String name = resultSet.getString("name");
         int yearOfEstablished = resultSet.getInt("yearOfEstablished");
-        ft = new FootballTeam(name, yearOfEstablished, marketValue);
+        footballTeam = new FootballTeam(name, yearOfEstablished, marketValue);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return ft;
+    return footballTeam;
+  }
+
+  @Override
+  public void updateFootballTeamName(FootballTeam footballTeam, String name) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue) {
+    // TODO Auto-generated method stub
+
   }
 
 }

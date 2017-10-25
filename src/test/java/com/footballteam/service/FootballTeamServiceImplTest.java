@@ -2,18 +2,20 @@ package com.footballteam.service;
 
 import static org.junit.Assert.*;
 import java.util.List;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import com.footballteam.domain.FootballTeam;
 import com.footballteam.service.FootballTeamServiceImpl;
 
 public class FootballTeamServiceImplTest {
-  FootballTeamServiceImpl footballTeamService = new FootballTeamServiceImpl();
+  static FootballTeamServiceImpl footballTeamService = new FootballTeamServiceImpl();
 
   FootballTeam FCL = new FootballTeam("FC Liverpool", 1892, 512000000.25);
   FootballTeam MU = new FootballTeam("Manchester United", 1878, 900000000.01);
 
-  @Test
-  public void checkConnection() {
+  @BeforeClass
+  public static void checkConnection() {
     assertNotNull(footballTeamService.getConnection());
   }
 
@@ -52,10 +54,26 @@ public class FootballTeamServiceImplTest {
     assertEquals(1, result);
   }
 
+  @Ignore
+  public static void checkRemoveAllFootballTeams() {
+    footballTeamService.removeAllFootballTeams();
+    assertEquals(1, footballTeamService.showAllFootballTeams());
+  }
+
+  @Test
+  public void checkRemoveFootballTeamById() {
+    // TODO
+  }
+
   @Test
   public void checkRemoveFootballTeamByName() {
     int result = footballTeamService.removeFootballTeamByName(MU.getName());
     assertEquals(1, result);
+  }
+
+  @Test
+  public void checkFindById() {
+    // TODO
   }
 
   @Test
@@ -75,9 +93,5 @@ public class FootballTeamServiceImplTest {
     FootballTeam footballTeamRetrieved = footballTeamService.findByMarketValue(FCL.getMarketValue());
     assertEquals(FCL.getMarketValue(), footballTeamRetrieved.getMarketValue(), 0.01);
   }
-  /*
-   * @After public void checkRemoveAllFootballTeams() {
-   * footballTeamService.removeAllFootballTeams(); assertEquals(1,
-   * footballTeamService.getAllFootballTeams()); }
-   */
+
 }

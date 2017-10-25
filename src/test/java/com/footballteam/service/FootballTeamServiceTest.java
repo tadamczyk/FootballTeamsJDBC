@@ -1,12 +1,13 @@
-package com.tomasz.service;
+package com.footballteam.service;
 
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
-import com.tomasz.domain.FootballTeam;
-import com.tomasz.service.FootballTeamService;
+
+import com.footballteam.domain.FootballTeam;
+import com.footballteam.service.FootballTeamService;
 
 public class FootballTeamServiceTest {
   FootballTeamService footballTeamService = new FootballTeamService();
@@ -51,10 +52,10 @@ public class FootballTeamServiceTest {
     assertEquals(FCL.getMarketValue(), footballTeamRetrieved.getMarketValue(), 0.01);
   }
 
-  /*@After
-  public void checkRemoveAllFootballTeams() {
-    footballTeamService.removeAllFootballTeams();
-    assertEquals(Arrays.asList(), footballTeamService.getAllFootballTeams());
-  }*/
+  /*
+   * @After public void checkRemoveAllFootballTeams() {
+   * footballTeamService.removeAllFootballTeams(); assertEquals(Arrays.asList(),
+   * footballTeamService.getAllFootballTeams()); }
+   */
 
 }

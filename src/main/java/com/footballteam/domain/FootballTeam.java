@@ -1,4 +1,4 @@
-package com.tomasz.domain;
+package com.footballteam.domain;
 
 public class FootballTeam {
   private long id;

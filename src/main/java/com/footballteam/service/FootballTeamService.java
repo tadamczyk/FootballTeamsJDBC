@@ -1,4 +1,4 @@
-package com.tomasz.service;
+package com.footballteam.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import com.tomasz.domain.FootballTeam;
+
+import com.footballteam.domain.FootballTeam;
 
 public class FootballTeamService implements IFootballTeamService {
   private Connection connection;
@@ -42,8 +43,9 @@ public class FootballTeamService implements IFootballTeamService {
           break;
         }
       }
-      if (!tableExists)
+      if (!tableExists) {
         statement.executeUpdate(createTableFootballTeam);
+      }
       addFootballTeamStmt = connection
           .prepareStatement("INSERT INTO FootballTeam(name, yearOfEstablished, marketValue) VALUES(?, ?, ?)");
       getAllFootballTeamsStmt = connection
@@ -69,7 +71,7 @@ public class FootballTeamService implements IFootballTeamService {
     }
   }
 
-  Connection getConnection() {
+  public Connection getConnection() {
     return connection;
   }
 
@@ -104,6 +106,24 @@ public class FootballTeamService implements IFootballTeamService {
       e.printStackTrace();
     }
     return footballTeams;
+  }
+
+  @Override
+  public void updateFootballTeamName(FootballTeam footballTeam, String name) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished) {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue) {
+    // TODO Auto-generated method stub
+
   }
 
   @Override
@@ -195,24 +215,6 @@ public class FootballTeamService implements IFootballTeamService {
       e.printStackTrace();
     }
     return footballTeam;
-  }
-
-  @Override
-  public void updateFootballTeamName(FootballTeam footballTeam, String name) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue) {
-    // TODO Auto-generated method stub
-
   }
 
 }

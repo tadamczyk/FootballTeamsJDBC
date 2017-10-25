@@ -1,7 +1,8 @@
-package com.tomasz.service;
+package com.footballteam.service;
 
 import java.util.List;
-import com.tomasz.domain.FootballTeam;
+
+import com.footballteam.domain.FootballTeam;
 
 public interface IFootballTeamService {
   public int addFootballTeam(FootballTeam footballTeam);

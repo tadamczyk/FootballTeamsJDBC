@@ -19,7 +19,7 @@ public class FootballTeamServiceTest {
   }
 
   @Test
-  public void checkAdding() {
+  public void checkAddFootballTeam() {
     FootballTeam footballTeam = new FootballTeam(NAME_1, YEAR_OF_ESTABLISHED_1, MARKET_VALUE_1);
     footballTeamService.removeAllFootballTeams();
     assertEquals(1, footballTeamService.addFootballTeam(footballTeam));

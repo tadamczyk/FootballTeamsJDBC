@@ -15,13 +15,9 @@ public interface IFootballTeamService {
 
   public void updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue);
 
-  public void removeAllFootballTeams();
+  public int removeAllFootballTeams();
 
-  public void removeFootballTeamById(long id);
-
-  public void removeFootballTeamByName(String name);
-
-  public FootballTeam findById(long id);
+  public int removeFootballTeamByName(String name);
 
   public FootballTeam findByName(String name);
 

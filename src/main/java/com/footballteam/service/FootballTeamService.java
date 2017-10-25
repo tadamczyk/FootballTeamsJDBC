@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.footballteam.domain.FootballTeam;
 
 public class FootballTeamService implements IFootballTeamService {
@@ -23,9 +22,7 @@ public class FootballTeamService implements IFootballTeamService {
   private PreparedStatement updateFootballTeamYearOfEstablishedStmt;
   private PreparedStatement updateFootballTeamMarketValueStmt;
   private PreparedStatement removeAllFootballTeamsStmt;
-  private PreparedStatement removeFootballTeamByIdStmt;
   private PreparedStatement removeFootballTeamByNameStmt;
-  private PreparedStatement findByIdStmt;
   private PreparedStatement findByNameStmt;
   private PreparedStatement findByYearOfEstablishedStmt;
   private PreparedStatement findByMarketValueStmt;
@@ -56,10 +53,9 @@ public class FootballTeamService implements IFootballTeamService {
       updateFootballTeamMarketValueStmt = connection
           .prepareStatement("UPDATE FootballTeam SET marketValue = ? WHERE id = ?");
       removeAllFootballTeamsStmt = connection.prepareStatement("DELETE FROM FootballTeam");
-      removeFootballTeamByIdStmt = connection.prepareStatement("DELETE FROM FootballTeam WHERE id = ?");
+      connection.prepareStatement("DELETE FROM FootballTeam WHERE id = ?");
       removeFootballTeamByNameStmt = connection.prepareStatement("DELETE FROM FootballTeam WHERE name = ?");
-      findByIdStmt = connection
-          .prepareStatement("SELECT id, name, yearOfEstablished, marketValue FROM FootballTeam WHERE id = ?");
+      connection.prepareStatement("SELECT id, name, yearOfEstablished, marketValue FROM FootballTeam WHERE id = ?");
       findByNameStmt = connection
           .prepareStatement("SELECT id, name, yearOfEstablished, marketValue FROM FootballTeam WHERE name = ?");
       findByYearOfEstablishedStmt = connection.prepareStatement(
@@ -127,43 +123,26 @@ public class FootballTeamService implements IFootballTeamService {
   }
 
   @Override
-  public void removeAllFootballTeams() {
+  public int removeAllFootballTeams() {
+    int count = 0;
     try {
-      removeAllFootballTeamsStmt.executeUpdate();
+      count = removeAllFootballTeamsStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return count;
   }
 
   @Override
-  public void removeFootballTeamById(long id) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void removeFootballTeamByName(String name) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public FootballTeam findById(long id) {
-    FootballTeam footballTeam = null;
+  public int removeFootballTeamByName(String name) {
+    int count = 0;
     try {
-      findByIdStmt.setLong(1, id);
-      ResultSet resultSet = findByIdStmt.executeQuery();
-      if (resultSet.next()) {
-        String name = resultSet.getString("name");
-        int yearOfEstablished = resultSet.getInt("yearOfEstablished");
-        double marketValue = resultSet.getDouble("marketValue");
-        footballTeam = new FootballTeam(name, yearOfEstablished, marketValue);
-      } else {
-      }
+      removeFootballTeamByNameStmt.setString(1, name);
+      count = removeFootballTeamByNameStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return footballTeam;
+    return count;
   }
 
   @Override

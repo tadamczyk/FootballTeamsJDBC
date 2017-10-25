@@ -5,17 +5,14 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
-
 import com.footballteam.domain.FootballTeam;
 import com.footballteam.service.FootballTeamService;
 
 public class FootballTeamServiceTest {
   FootballTeamService footballTeamService = new FootballTeamService();
 
-  private final static String NAME_FCL = "FC Liverpool";
-  private final static int YEAR_OF_ESTABLISHED_FCL = 1892;
-  private final static double MARKET_VALUE_FCL = 512000000.23;
-  FootballTeam FCL = new FootballTeam(NAME_FCL, YEAR_OF_ESTABLISHED_FCL, MARKET_VALUE_FCL);
+  FootballTeam FCL = new FootballTeam("FC Liverpool", 1892, 512000000.25);
+  FootballTeam MU = new FootballTeam("Manchester United", 1878, 900000000.01);
 
   @Test
   public void checkConnection() {
@@ -24,14 +21,16 @@ public class FootballTeamServiceTest {
 
   @Test
   public void checkAddFootballTeam() {
-    int result = footballTeamService.addFootballTeam(FCL);
-    assertEquals(1, result);
+    int result = 0;
+    result += footballTeamService.addFootballTeam(FCL);
+    result += footballTeamService.addFootballTeam(MU);
+    assertEquals(2, result);
   }
 
   @Test
-  public void checkFindById() {
-    FootballTeam footballTeamRetrieved = footballTeamService.findById(FCL.getId());
-    assertEquals(FCL.getId(), footballTeamRetrieved.getId());
+  public void checkRemoveFootballTeamByName() {
+    int result = footballTeamService.removeFootballTeamByName(MU.getName());
+    assertEquals(1, result);
   }
 
   @Test

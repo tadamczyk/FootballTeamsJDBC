@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 import java.util.List;
 import org.junit.Test;
 import com.footballteam.domain.FootballTeam;
-import com.footballteam.service.FootballTeamService;
+import com.footballteam.service.FootballTeamServiceImpl;
 
-public class FootballTeamServiceTest {
-  FootballTeamService footballTeamService = new FootballTeamService();
+public class FootballTeamServiceImplTest {
+  FootballTeamServiceImpl footballTeamService = new FootballTeamServiceImpl();
 
   FootballTeam FCL = new FootballTeam("FC Liverpool", 1892, 512000000.25);
   FootballTeam MU = new FootballTeam("Manchester United", 1878, 900000000.01);
@@ -27,7 +27,7 @@ public class FootballTeamServiceTest {
 
   @Test
   public void checkGetAllFootballTeams() {
-    List<FootballTeam> footballTeams = footballTeamService.getAllFootballTeams();
+    List<FootballTeam> footballTeams = footballTeamService.showAllFootballTeams();
     FootballTeam footballTeamRetrieved = footballTeams.get(0);
     assertEquals(footballTeams.get(0).getName(), footballTeamRetrieved.getName());
     assertEquals(footballTeams.get(0).getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());

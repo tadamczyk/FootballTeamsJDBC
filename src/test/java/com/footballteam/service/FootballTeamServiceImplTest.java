@@ -2,9 +2,10 @@ package com.footballteam.service;
 
 import static org.junit.Assert.*;
 import java.util.List;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import com.footballteam.domain.FootballTeam;
 import com.footballteam.service.FootballTeamServiceImpl;
@@ -19,16 +20,27 @@ public class FootballTeamServiceImplTest {
   private static FootballTeam RM = new FootballTeam("Real Madrid", 1902, 720000000.11);
 
   @BeforeClass
-  public static void checkConnection() {
+  public static void checkGetConnection() {
     assertNotNull(footballTeamService.getConnection());
   }
 
-  @Test
+  @AfterClass
+  public static void checkCloseConnection() {
+    assertNotNull(footballTeamService.closeConnection());
+  }
+
+  @Before
   public void checkAddFootballTeam() {
     assertEquals(1, footballTeamService.addFootballTeam(FCL));
     assertEquals(1, footballTeamService.addFootballTeam(MU));
     assertEquals(1, footballTeamService.addFootballTeam(FCB));
     assertEquals(1, footballTeamService.addFootballTeam(RM));
+  }
+
+  @After
+  public void checkRemoveAllFootballTeams() {
+    footballTeamService.removeAllFootballTeams();
+    assertTrue(footballTeamService.getAllFootballTeams().size() == 0);
   }
 
   @Test
@@ -63,12 +75,6 @@ public class FootballTeamServiceImplTest {
     assertEquals(newMarketValue, footballTeams.get(0).getMarketValue(), _PRECISION);
   }
 
-  @AfterClass
-  public static void checkRemoveAllFootballTeams() {
-    footballTeamService.removeAllFootballTeams();
-    assertTrue(footballTeamService.getAllFootballTeams().size() == 0);
-  }
-
   @Test
   public void checkRemoveFootballTeamById() {
     footballTeams = footballTeamService.getAllFootballTeams();
@@ -89,24 +95,44 @@ public class FootballTeamServiceImplTest {
     footballTeamService.addFootballTeam(tmp);
   }
 
-  @Ignore
+  @Test
   public void checkFindById() {
-    // TODO
+    footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam tmp = footballTeams.get(0);
+    FootballTeam footballTeamRetrieved = footballTeamService.findById(tmp.getId());
+    assertEquals(tmp.getName(), footballTeamRetrieved.getName());
+    assertEquals(tmp.getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
+    assertEquals(tmp.getMarketValue(), footballTeamRetrieved.getMarketValue(), _PRECISION);
   }
 
-  @Ignore
+  @Test
   public void checkFindByName() {
-    // TODO
+    footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam tmp = footballTeams.get(0);
+    FootballTeam footballTeamRetrieved = footballTeamService.findByName(tmp.getName());
+    assertEquals(tmp.getName(), footballTeamRetrieved.getName());
+    assertEquals(tmp.getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
+    assertEquals(tmp.getMarketValue(), footballTeamRetrieved.getMarketValue(), _PRECISION);
   }
 
-  @Ignore
+  @Test
   public void checkFindByYearOfEstablished() {
-    // TODO
+    footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam tmp = footballTeams.get(0);
+    FootballTeam footballTeamRetrieved = footballTeamService.findByYearOfEstablished(tmp.getYearOfEstablished());
+    assertEquals(tmp.getName(), footballTeamRetrieved.getName());
+    assertEquals(tmp.getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
+    assertEquals(tmp.getMarketValue(), footballTeamRetrieved.getMarketValue(), _PRECISION);
   }
 
-  @Ignore
+  @Test
   public void checkFindByMarketValue() {
-    // TODO
+    footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam tmp = footballTeams.get(0);
+    FootballTeam footballTeamRetrieved = footballTeamService.findByMarketValue(tmp.getMarketValue());
+    assertEquals(tmp.getName(), footballTeamRetrieved.getName());
+    assertEquals(tmp.getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
+    assertEquals(tmp.getMarketValue(), footballTeamRetrieved.getMarketValue(), _PRECISION);
   }
 
 }

@@ -74,6 +74,16 @@ public class FootballTeamServiceImpl implements FootballTeamService {
     return connection;
   }
 
+  public boolean closeConnection() {
+    try {
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+
   @Override
   public int addFootballTeam(FootballTeam footballTeam) {
     int counter = 0;

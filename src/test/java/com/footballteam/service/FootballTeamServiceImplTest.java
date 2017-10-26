@@ -2,6 +2,7 @@ package com.footballteam.service;
 
 import static org.junit.Assert.*;
 import java.util.List;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,10 +10,13 @@ import com.footballteam.domain.FootballTeam;
 import com.footballteam.service.FootballTeamServiceImpl;
 
 public class FootballTeamServiceImplTest {
-  static FootballTeamServiceImpl footballTeamService = new FootballTeamServiceImpl();
-
-  FootballTeam FCL = new FootballTeam("FC Liverpool", 1892, 512000000.25);
-  FootballTeam MU = new FootballTeam("Manchester United", 1878, 900000000.01);
+  private static final double _PRECISION = 0.01;
+  private static FootballTeamServiceImpl footballTeamService = new FootballTeamServiceImpl();
+  private static List<FootballTeam> footballTeams = footballTeamService.getAllFootballTeams();
+  private static FootballTeam FCL = new FootballTeam("FC Liverpool", 1892, 512000000.25);
+  private static FootballTeam MU = new FootballTeam("Manchester United", 1878, 900000000.01);
+  private static FootballTeam FCB = new FootballTeam("FC Barcelona", 1899, 612000000.28);
+  private static FootballTeam RM = new FootballTeam("Real Madrid", 1902, 720000000.11);
 
   @BeforeClass
   public static void checkConnection() {
@@ -21,77 +25,88 @@ public class FootballTeamServiceImplTest {
 
   @Test
   public void checkAddFootballTeam() {
-    int result = 0;
-    result += footballTeamService.addFootballTeam(FCL);
-    result += footballTeamService.addFootballTeam(MU);
-    assertEquals(2, result);
+    assertEquals(1, footballTeamService.addFootballTeam(FCL));
+    assertEquals(1, footballTeamService.addFootballTeam(MU));
+    assertEquals(1, footballTeamService.addFootballTeam(FCB));
+    assertEquals(1, footballTeamService.addFootballTeam(RM));
   }
 
   @Test
   public void checkGetAllFootballTeams() {
-    List<FootballTeam> footballTeams = footballTeamService.showAllFootballTeams();
-    FootballTeam footballTeamRetrieved = footballTeams.get(0);
-    assertEquals(footballTeams.get(0).getName(), footballTeamRetrieved.getName());
-    assertEquals(footballTeams.get(0).getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
-    assertEquals(footballTeams.get(0).getMarketValue(), footballTeamRetrieved.getMarketValue(), 0.01);
+    assertEquals(4, footballTeamService.getAllFootballTeams().size());
   }
 
   @Test
   public void checkUpdateFootballTeamName() {
-    int result = footballTeamService.updateFootballTeamName(FCL, "Legia Warszawa");
-    assertEquals(1, result);
+    String newName = "Legia Warsaw";
+    footballTeams = footballTeamService.getAllFootballTeams();
+    footballTeamService.updateFootballTeamName(footballTeams.get(0), newName);
+    footballTeams = footballTeamService.getAllFootballTeams();
+    assertEquals(newName, footballTeams.get(0).getName());
   }
 
   @Test
   public void checkUpdateFootballTeamYearOfEstablished() {
-    int result = footballTeamService.updateFootballTeamYearOfEstablished(FCL, 1916);
-    assertEquals(1, result);
+    int newYearOfEstablished = 1916;
+    footballTeams = footballTeamService.getAllFootballTeams();
+    footballTeamService.updateFootballTeamYearOfEstablished(footballTeams.get(0), newYearOfEstablished);
+    footballTeams = footballTeamService.getAllFootballTeams();
+    assertEquals(newYearOfEstablished, footballTeams.get(0).getYearOfEstablished());
   }
 
   @Test
   public void checkUpdateFootballTeamMarketValue() {
-    int result = footballTeamService.updateFootballTeamMarketValue(FCL, 16000000.01);
-    assertEquals(1, result);
+    double newMarketValue = 16000000.02;
+    footballTeams = footballTeamService.getAllFootballTeams();
+    footballTeamService.updateFootballTeamMarketValue(footballTeams.get(0), newMarketValue);
+    footballTeams = footballTeamService.getAllFootballTeams();
+    assertEquals(newMarketValue, footballTeams.get(0).getMarketValue(), _PRECISION);
   }
 
-  @Ignore
+  @AfterClass
   public static void checkRemoveAllFootballTeams() {
     footballTeamService.removeAllFootballTeams();
-    assertEquals(1, footballTeamService.showAllFootballTeams());
+    assertTrue(footballTeamService.getAllFootballTeams().size() == 0);
   }
 
   @Test
   public void checkRemoveFootballTeamById() {
-    // TODO
+    footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam tmp = footballTeams.get(0);
+    footballTeamService.removeFootballTeamById(footballTeams.get(0).getId());
+    footballTeams = footballTeamService.getAllFootballTeams();
+    assertEquals(3, footballTeams.size());
+    footballTeamService.addFootballTeam(tmp);
   }
 
   @Test
   public void checkRemoveFootballTeamByName() {
-    int result = footballTeamService.removeFootballTeamByName(MU.getName());
-    assertEquals(1, result);
+    footballTeams = footballTeamService.getAllFootballTeams();
+    FootballTeam tmp = footballTeams.get(0);
+    footballTeamService.removeFootballTeamByName(footballTeams.get(0).getName());
+    footballTeams = footballTeamService.getAllFootballTeams();
+    assertEquals(3, footballTeams.size());
+    footballTeamService.addFootballTeam(tmp);
   }
 
-  @Test
+  @Ignore
   public void checkFindById() {
     // TODO
   }
 
-  @Test
+  @Ignore
   public void checkFindByName() {
-    FootballTeam footballTeamRetrieved = footballTeamService.findByName(FCL.getName());
-    assertEquals(FCL.getName(), footballTeamRetrieved.getName());
+    // TODO
   }
 
-  @Test
+  @Ignore
   public void checkFindByYearOfEstablished() {
-    FootballTeam footballTeamRetrieved = footballTeamService.findByYearOfEstablished(FCL.getYearOfEstablished());
-    assertEquals(FCL.getYearOfEstablished(), footballTeamRetrieved.getYearOfEstablished());
+    // TODO
   }
 
-  @Test
+  @Ignore
   public void checkFindByMarketValue() {
-    FootballTeam footballTeamRetrieved = footballTeamService.findByMarketValue(FCL.getMarketValue());
-    assertEquals(FCL.getMarketValue(), footballTeamRetrieved.getMarketValue(), 0.01);
+    // TODO
   }
 
 }

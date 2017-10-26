@@ -6,7 +6,7 @@ import com.footballteam.domain.FootballTeam;
 public interface FootballTeamService {
   public int addFootballTeam(FootballTeam footballTeam);
 
-  public List<FootballTeam> showAllFootballTeams();
+  public List<FootballTeam> getAllFootballTeams();
 
   public int updateFootballTeamName(FootballTeam footballTeam, String name);
 

@@ -30,9 +30,13 @@ public class FootballTeamServiceImpl implements FootballTeamService {
   private Statement statement;
 
   public FootballTeamServiceImpl() {
+    openConnection();
+    createTable();
+    createStatements();
+  }
+
+  public boolean createTable() {
     try {
-      connection = DriverManager.getConnection(url);
-      statement = connection.createStatement();
       ResultSet resultSet = connection.getMetaData().getTables(null, null, null, null);
       boolean tableExists = false;
       while (resultSet.next()) {
@@ -44,6 +48,15 @@ public class FootballTeamServiceImpl implements FootballTeamService {
       if (!tableExists) {
         statement.executeUpdate(createTableFootballTeam);
       }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return true;
+  }
+
+  public boolean createStatements() {
+    try {
       addFootballTeamStmt = connection
           .prepareStatement("INSERT INTO FootballTeam(name, yearOfEstablished, marketValue) VALUES(?, ?, ?)");
       getAllFootballTeamsStmt = connection
@@ -67,11 +80,20 @@ public class FootballTeamServiceImpl implements FootballTeamService {
           .prepareStatement("SELECT id, name, yearOfEstablished, marketValue FROM FootballTeam WHERE marketValue = ?");
     } catch (SQLException e) {
       e.printStackTrace();
+      return false;
     }
+    return true;
   }
 
-  public Connection getConnection() {
-    return connection;
+  public boolean openConnection() {
+    try {
+      connection = DriverManager.getConnection(url);
+      statement = connection.createStatement();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+    return true;
   }
 
   public boolean closeConnection() {
@@ -82,6 +104,10 @@ public class FootballTeamServiceImpl implements FootballTeamService {
       return false;
     }
     return true;
+  }
+
+  public Connection getConnection() {
+    return connection;
   }
 
   @Override

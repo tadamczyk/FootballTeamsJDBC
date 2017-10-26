@@ -20,8 +20,8 @@ public class FootballTeamServiceImplTest {
   private static FootballTeam RM = new FootballTeam("Real Madrid", 1902, 720000000.11);
 
   @BeforeClass
-  public static void checkGetConnection() {
-    assertNotNull(footballTeamService.getConnection());
+  public static void checkOpenConnection() {
+    assertNotNull(footballTeamService.openConnection());
   }
 
   @AfterClass
@@ -41,6 +41,21 @@ public class FootballTeamServiceImplTest {
   public void checkRemoveAllFootballTeams() {
     footballTeamService.removeAllFootballTeams();
     assertTrue(footballTeamService.getAllFootballTeams().size() == 0);
+  }
+
+  @Test
+  public void checkCreateTable() {
+    assertNotNull(footballTeamService.createTable());
+  }
+
+  @Test
+  public void checkCreateStatements() {
+    assertNotNull(footballTeamService.createStatements());
+  }
+
+  @Test
+  public void checkGetConnection() {
+    assertNotNull(footballTeamService.getConnection());
   }
 
   @Test

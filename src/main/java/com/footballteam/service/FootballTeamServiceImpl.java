@@ -76,16 +76,16 @@ public class FootballTeamServiceImpl implements FootballTeamService {
 
   @Override
   public int addFootballTeam(FootballTeam footballTeam) {
-    int count = 0;
+    int counter = 0;
     try {
       addFootballTeamStmt.setString(1, footballTeam.getName());
       addFootballTeamStmt.setInt(2, footballTeam.getYearOfEstablished());
       addFootballTeamStmt.setDouble(3, footballTeam.getMarketValue());
-      count = addFootballTeamStmt.executeUpdate();
+      counter = addFootballTeamStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override
@@ -109,76 +109,76 @@ public class FootballTeamServiceImpl implements FootballTeamService {
 
   @Override
   public int updateFootballTeamName(FootballTeam footballTeam, String name) {
-    int count = 0;
+    int counter = 0;
     try {
       updateFootballTeamNameStmt.setString(1, name);
       updateFootballTeamNameStmt.setLong(2, footballTeam.getId());
-      count = updateFootballTeamNameStmt.executeUpdate();
+      counter = updateFootballTeamNameStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override
   public int updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished) {
-    int count = 0;
+    int counter = 0;
     try {
       updateFootballTeamYearOfEstablishedStmt.setInt(1, yearOfEstablished);
       updateFootballTeamYearOfEstablishedStmt.setLong(2, footballTeam.getId());
-      count = updateFootballTeamYearOfEstablishedStmt.executeUpdate();
+      counter = updateFootballTeamYearOfEstablishedStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override
   public int updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue) {
-    int count = 0;
+    int counter = 0;
     try {
       updateFootballTeamMarketValueStmt.setDouble(1, marketValue);
       updateFootballTeamMarketValueStmt.setLong(2, footballTeam.getId());
-      count = updateFootballTeamMarketValueStmt.executeUpdate();
+      counter = updateFootballTeamMarketValueStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override
   public int removeAllFootballTeams() {
-    int count = 0;
+    int counter = 0;
     try {
-      count = removeAllFootballTeamsStmt.executeUpdate();
+      counter = removeAllFootballTeamsStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override
   public int removeFootballTeamById(long id) {
-    int count = 0;
+    int counter = 0;
     try {
       removeFootballTeamByIdStmt.setLong(1, id);
-      count = removeFootballTeamByIdStmt.executeUpdate();
+      counter = removeFootballTeamByIdStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override
   public int removeFootballTeamByName(String name) {
-    int count = 0;
+    int counter = 0;
     try {
       removeFootballTeamByNameStmt.setString(1, name);
-      count = removeFootballTeamByNameStmt.executeUpdate();
+      counter = removeFootballTeamByNameStmt.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return count;
+    return counter;
   }
 
   @Override

@@ -24,11 +24,13 @@ public class FootballTeamServiceImplTest {
     assertNotNull(footballTeamService.openConnection());
   }
 
+  // hidden
   @AfterClass
   public static void checkCloseConnection() {
     assertNotNull(footballTeamService.closeConnection());
   }
 
+  // @BeforeClass and static method
   @Before
   public void checkAddFootballTeam() {
     assertEquals(1, footballTeamService.addFootballTeam(FCL));
@@ -37,6 +39,7 @@ public class FootballTeamServiceImplTest {
     assertEquals(1, footballTeamService.addFootballTeam(RM));
   }
 
+  // @Ignore
   @After
   public void checkRemoveAllFootballTeams() {
     footballTeamService.removeAllFootballTeams();

@@ -17,23 +17,6 @@ target
 tmp*
 dist
 
-# Other scm
-.svn
-.CVS
-.hg*
-.classpath
-.project*
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.loadpath
-.recommenders
-
 # External tool builders
 .externalToolBuilders/
 
@@ -71,3 +54,20 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+# Other scm
+.svn
+.CVS
+.hg*
+.classpath
+.project*
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders

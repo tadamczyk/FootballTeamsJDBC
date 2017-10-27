@@ -67,6 +67,22 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
+  public void checkUpdateFootballTeam() {
+    String newName = "Arka Gdynia";
+    int newYearOfEstablished = 1929;
+    double newMarketValue = 1000000.99;
+    footballTeams = footballTeamService.getAllFootballTeams();
+    footballTeamService.updateFootballTeamName(footballTeams.get(footballTeams.size() - 1), newName);
+    footballTeamService.updateFootballTeamYearOfEstablished(footballTeams.get(footballTeams.size() - 1),
+        newYearOfEstablished);
+    footballTeamService.updateFootballTeamMarketValue(footballTeams.get(footballTeams.size() - 1), newMarketValue);
+    footballTeams = footballTeamService.getAllFootballTeams();
+    assertEquals(newName, footballTeams.get(footballTeams.size() - 1).getName());
+    assertEquals(newYearOfEstablished, footballTeams.get(footballTeams.size() - 1).getYearOfEstablished());
+    assertEquals(newMarketValue, footballTeams.get(footballTeams.size() - 1).getMarketValue(), _PRECISION);
+  }
+
+  @Test
   public void checkUpdateFootballTeamName() {
     String newName = "Legia Warsaw";
     footballTeams = footballTeamService.getAllFootballTeams();

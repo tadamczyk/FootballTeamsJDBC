@@ -17,6 +17,7 @@ public class FootballTeamServiceImpl implements FootballTeamService {
       + " name VARCHAR(50) NOT NULL, yearOfEstablished INTEGER NOT NULL, marketValue REAL NOT NULL)";
   private PreparedStatement addFootballTeamStmt;
   private PreparedStatement getAllFootballTeamsStmt;
+  private PreparedStatement updateFootballTeamStmt;
   private PreparedStatement updateFootballTeamNameStmt;
   private PreparedStatement updateFootballTeamYearOfEstablishedStmt;
   private PreparedStatement updateFootballTeamMarketValueStmt;
@@ -61,6 +62,8 @@ public class FootballTeamServiceImpl implements FootballTeamService {
           .prepareStatement("INSERT INTO FootballTeam(name, yearOfEstablished, marketValue) VALUES(?, ?, ?)");
       getAllFootballTeamsStmt = connection
           .prepareStatement("SELECT id, name, yearOfEstablished, marketValue FROM FootballTeam");
+      updateFootballTeamStmt = connection.prepareStatement(
+          "UPDATE FootballTeam SET id = id, name = ?, yearOfEstablished = ?, marketValue = ? WHERE id = ?");
       updateFootballTeamNameStmt = connection.prepareStatement(
           "UPDATE FootballTeam SET id = id, name = ?, yearOfEstablished = yearOfEstablished, marketValue = marketValue WHERE id = ?");
       updateFootballTeamYearOfEstablishedStmt = connection.prepareStatement(
@@ -141,6 +144,21 @@ public class FootballTeamServiceImpl implements FootballTeamService {
       e.printStackTrace();
     }
     return footballTeams;
+  }
+
+  @Override
+  public int updateFootballTeam(FootballTeam footballTeam, String name, int yearOfEstablished, double marketValue) {
+    int counter = 0;
+    try {
+      updateFootballTeamStmt.setString(1, name);
+      updateFootballTeamStmt.setInt(2, yearOfEstablished);
+      updateFootballTeamStmt.setDouble(3, marketValue);
+      updateFootballTeamStmt.setLong(4, footballTeam.getId());
+      counter = updateFootballTeamStmt.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return counter;
   }
 
   @Override

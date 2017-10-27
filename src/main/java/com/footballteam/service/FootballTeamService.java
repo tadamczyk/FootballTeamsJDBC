@@ -8,6 +8,8 @@ public interface FootballTeamService {
 
   public List<FootballTeam> getAllFootballTeams();
 
+  public int updateFootballTeam(FootballTeam footballTeam, String name, int yearOfEstablished, double marketValue);
+
   public int updateFootballTeamName(FootballTeam footballTeam, String name);
 
   public int updateFootballTeamYearOfEstablished(FootballTeam footballTeam, int yearOfEstablished);

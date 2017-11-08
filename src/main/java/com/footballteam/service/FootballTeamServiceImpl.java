@@ -117,18 +117,30 @@ public class FootballTeamServiceImpl implements FootballTeamService {
   public int addFootballTeam(FootballTeam footballTeam) {
     int counter = 0;
     try {
+      connection.setAutoCommit(false);
       addFootballTeamStmt.setString(1, footballTeam.getName());
       addFootballTeamStmt.setInt(2, footballTeam.getYearOfEstablished());
       addFootballTeamStmt.setDouble(3, footballTeam.getMarketValue());
       counter = addFootballTeamStmt.executeUpdate();
+      connection.commit();
     } catch (SQLException e) {
-      e.printStackTrace();
+      try {
+        connection.rollback();
+      } catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
     return counter;
   }
 
   @Override
-  public int addAllFootballTeams(List<FootballTeam> footballTeams) {
+  public int addAllFootballTeamsFromList(List<FootballTeam> footballTeams) {
     int counter = 0;
     try {
       connection.setAutoCommit(false);
@@ -140,11 +152,16 @@ public class FootballTeamServiceImpl implements FootballTeamService {
         connection.commit();
       }
     } catch (SQLException e) {
-      e.printStackTrace();
       try {
         connection.rollback();
       } catch (SQLException ex) {
         ex.printStackTrace();
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException e) {
+        e.printStackTrace();
       }
     }
     return counter;

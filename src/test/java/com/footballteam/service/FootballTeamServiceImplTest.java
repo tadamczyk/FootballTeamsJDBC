@@ -1,6 +1,9 @@
 package com.footballteam.service;
 
+import static org.hamcrest.CoreMatchers.either;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,11 +16,12 @@ import com.footballteam.service.FootballTeamServiceImpl;
 public class FootballTeamServiceImplTest {
   private static final double _PRECISION = 0.01;
   private static FootballTeamServiceImpl footballTeamService = new FootballTeamServiceImpl();
-  private static List<FootballTeam> footballTeams = footballTeamService.getAllFootballTeams();
+  private static List<FootballTeam> footballTeams = new ArrayList<FootballTeam>();
   private static FootballTeam FCL = new FootballTeam("FC Liverpool", 1892, 512000000.25);
   private static FootballTeam MU = new FootballTeam("Manchester United", 1878, 900000000.01);
   private static FootballTeam FCB = new FootballTeam("FC Barcelona", 1899, 612000000.28);
   private static FootballTeam RM = new FootballTeam("Real Madrid", 1902, 720000000.11);
+  private static FootballTeam EL = new FootballTeam("Everton Liverpool", 1878, 412000000.25);
 
   @BeforeClass
   public static void checkOpenConnection() {
@@ -32,11 +36,14 @@ public class FootballTeamServiceImplTest {
 
   // @BeforeClass and static method
   @Before
-  public void checkAddFootballTeam() {
-    assertEquals(1, footballTeamService.addFootballTeam(FCL));
-    assertEquals(1, footballTeamService.addFootballTeam(MU));
-    assertEquals(1, footballTeamService.addFootballTeam(FCB));
-    assertEquals(1, footballTeamService.addFootballTeam(RM));
+  public void checkAddAllFootballTeam() {
+    List<FootballTeam> footballTeamsInput = new ArrayList<FootballTeam>();
+    footballTeamsInput.add(FCL);
+    footballTeamsInput.add(MU);
+    footballTeamsInput.add(FCB);
+    footballTeamsInput.add(RM);
+    int size = footballTeamService.addAllFootballTeamsFromList(footballTeamsInput);
+    assertThat(size, either(is(0)).or(is(4)));
   }
 
   // @Ignore
@@ -59,6 +66,11 @@ public class FootballTeamServiceImplTest {
   @Test
   public void checkGetConnection() {
     assertNotNull(footballTeamService.getConnection());
+  }
+
+  @Test
+  public void checkAddFootballTeam() {
+    assertEquals(1, footballTeamService.addFootballTeam(EL));
   }
 
   @Test

@@ -70,7 +70,8 @@ public class FootballTeamServiceImplTest {
 
   @Test
   public void checkAddFootballTeam() {
-    assertEquals(1, footballTeamService.addFootballTeam(EL));
+    footballTeamService.addFootballTeam(EL);
+    assertEquals(5, footballTeamService.getAllFootballTeams().size());
   }
 
   @Test

@@ -131,11 +131,13 @@ public class FootballTeamServiceImpl implements FootballTeamService {
   public int addAllFootballTeams(List<FootballTeam> footballTeams) {
     int counter = 0;
     try {
+      connection.setAutoCommit(false);
       for (FootballTeam footballTeam : footballTeams) {
         addFootballTeamStmt.setString(1, footballTeam.getName());
         addFootballTeamStmt.setInt(2, footballTeam.getYearOfEstablished());
         addFootballTeamStmt.setDouble(3, footballTeam.getMarketValue());
         counter += addFootballTeamStmt.executeUpdate();
+        connection.commit();
       }
     } catch (SQLException e) {
       e.printStackTrace();

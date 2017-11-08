@@ -128,6 +128,27 @@ public class FootballTeamServiceImpl implements FootballTeamService {
   }
 
   @Override
+  public int addAllFootballTeams(List<FootballTeam> footballTeams) {
+    int counter = 0;
+    try {
+      for (FootballTeam footballTeam : footballTeams) {
+        addFootballTeamStmt.setString(1, footballTeam.getName());
+        addFootballTeamStmt.setInt(2, footballTeam.getYearOfEstablished());
+        addFootballTeamStmt.setDouble(3, footballTeam.getMarketValue());
+        counter += addFootballTeamStmt.executeUpdate();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      try {
+        connection.rollback();
+      } catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+    return counter;
+  }
+
+  @Override
   public List<FootballTeam> getAllFootballTeams() {
     List<FootballTeam> footballTeams = new ArrayList<FootballTeam>();
     try {

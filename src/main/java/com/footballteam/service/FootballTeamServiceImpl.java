@@ -252,6 +252,30 @@ public class FootballTeamServiceImpl implements FootballTeamService {
   }
 
   @Override
+  public int removeAllFootballTeamsFromList(List<FootballTeam> footballTeams) {
+    int counter = 0;
+    try {
+      connection.setAutoCommit(false);
+      for (FootballTeam footballTeam : footballTeams) {
+        if (findByName(footballTeam.getName()) == null) {
+          throw new SQLException("Cannot find football team to remove.");
+        }
+        removeFootballTeamByNameStmt.setString(1, footballTeam.getName());
+        counter += removeFootballTeamByNameStmt.executeUpdate();
+      }
+      connection.commit();
+    } catch (SQLException exception) {
+      try {
+        connection.rollback();
+        counter = 0;
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return counter;
+  }
+
+  @Override
   public int removeFootballTeamById(long id) {
     int counter = 0;
     try {

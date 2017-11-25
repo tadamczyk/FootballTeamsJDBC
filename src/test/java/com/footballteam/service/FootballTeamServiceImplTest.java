@@ -123,6 +123,15 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
+  public void checkRemoveAllFootballTeamsFromList() {
+    List<FootballTeam> footballTeamsInput = new ArrayList<FootballTeam>();
+    footballTeamsInput.add(FCL);
+    footballTeamsInput.add(MU);
+    int counter = footballTeamService.removeAllFootballTeamsFromList(footballTeamsInput);
+    assertThat(counter, either(is(0)).or(is(2)));
+  }
+
+  @Test
   public void checkRemoveFootballTeamById() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);

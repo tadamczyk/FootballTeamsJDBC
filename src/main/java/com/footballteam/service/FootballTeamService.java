@@ -19,6 +19,8 @@ public interface FootballTeamService {
   public int updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue);
 
   public int removeAllFootballTeams();
+  
+  public int removeAllFootballTeamsFromList(List<FootballTeam> footballTeams);
 
   public int removeFootballTeamById(long id);
 

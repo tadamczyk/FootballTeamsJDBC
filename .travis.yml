@@ -1,6 +1,13 @@
 language:
   java
 
+jdk:
+  oraclejdk8
+
+cache:
+  directories:
+    - $HOME/.m2
+
 sudo:
   false
 
@@ -9,3 +16,9 @@ before_script:
 
 script:
   - mvn clean test
+
+after_success:
+  - bash < (curl -s https://codecov.io/bash)
+  
+after_script:
+  - curl http://localhost:5555/close

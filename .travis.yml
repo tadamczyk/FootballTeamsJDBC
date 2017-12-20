@@ -1,0 +1,11 @@
+language:
+  java
+
+sudo:
+  false
+
+before_script:
+  - ./db/runHSQLDBServer.sh
+
+script:
+  - mvn clean test

@@ -6,19 +6,16 @@ jdk:
 
 cache:
   directories:
-    - $HOME/.m2
+    -$HOME / .m2
 
 sudo:
   false
 
 before_script:
   - ./db/runHSQLDBServer.sh &
-
+  
 script:
   - mvn clean test
 
 after_success:
-  - bash < (curl -s https://codecov.io/bash)
-  
-after_script:
-  - curl http://localhost:5555/close
+  - bash <(curl -s https://codecov.io/bash)

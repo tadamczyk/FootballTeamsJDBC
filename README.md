@@ -1,4 +1,4 @@
-# FootballTeam JDBC + Spring
+# FootballTeam master
 | Autor | Język programowania | Travis Status | Codecov Status | 
 :--:|:--:|:--:|:--:
 | [![tadamczyk](https://avatars1.githubusercontent.com/u/16397764?s=40&v=4)](https://github.com/tadamczyk) | [![java](https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/24px-Java_programming_language_logo.svg.png)](https://pl.wikipedia.org/wiki/Java) | [![Build Status](https://travis-ci.org/tadamczyk/FootballTeamsJDBC.svg?branch=master)](https://travis-ci.org/tadamczyk/FootballTeamsJDBC) | [![codecov](https://codecov.io/gh/tadamczyk/FootballTeamsJDBC/branch/master/graph/badge.svg)](https://codecov.io/gh/tadamczyk/FootballTeamsJDBC) |

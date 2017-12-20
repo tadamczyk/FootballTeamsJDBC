@@ -4,8 +4,8 @@ language:
 sudo:
   false
 
-install:
-  - ./db/runHSQLDBServer.sh
+before_script:
+  - ./db/runHSQLDBServer.sh &
 
 script:
   - mvn clean test

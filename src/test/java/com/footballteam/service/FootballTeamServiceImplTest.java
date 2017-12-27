@@ -28,13 +28,11 @@ public class FootballTeamServiceImplTest {
     assertNotNull(footballTeamService.openConnection());
   }
 
-  // hidden
   @AfterClass
   public static void checkCloseConnection() {
     assertNotNull(footballTeamService.closeConnection());
   }
 
-  // @BeforeClass and static method
   @Before
   public void checkAddAllFootballTeam() {
     List<FootballTeam> footballTeamsInput = new ArrayList<FootballTeam>();
@@ -46,7 +44,6 @@ public class FootballTeamServiceImplTest {
     assertThat(size, either(is(0)).or(is(4)));
   }
 
-  // @Ignore
   @After
   public void checkRemoveAllFootballTeams() {
     footballTeamService.removeAllFootballTeams();
@@ -85,10 +82,8 @@ public class FootballTeamServiceImplTest {
     int newYearOfEstablished = 1929;
     double newMarketValue = 1000000.99;
     footballTeams = footballTeamService.getAllFootballTeams();
-    footballTeamService.updateFootballTeamName(footballTeams.get(footballTeams.size() - 1), newName);
-    footballTeamService.updateFootballTeamYearOfEstablished(footballTeams.get(footballTeams.size() - 1),
-        newYearOfEstablished);
-    footballTeamService.updateFootballTeamMarketValue(footballTeams.get(footballTeams.size() - 1), newMarketValue);
+    footballTeamService.updateFootballTeam(footballTeams.get(footballTeams.size() - 1), newName, newYearOfEstablished,
+        newMarketValue);
     footballTeams = footballTeamService.getAllFootballTeams();
     assertEquals(newName, footballTeams.get(footballTeams.size() - 1).getName());
     assertEquals(newYearOfEstablished, footballTeams.get(footballTeams.size() - 1).getYearOfEstablished());

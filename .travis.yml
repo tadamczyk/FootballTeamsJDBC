@@ -11,6 +11,9 @@ cache:
 sudo:
   false
 
+install:
+  true
+
 before_script:
   - ./db/runHSQLDBServer.sh &
   

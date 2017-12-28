@@ -12,7 +12,7 @@ public interface FootballTeamManager {
 
   void updateFootballTeam(FootballTeam footballTeam);
 
-  void deleteFootballTeam(FootballTeam footballTeam);
+  void removeFootballTeam(FootballTeam footballTeam);
 
   FootballTeam findById(Long id);
 

@@ -41,7 +41,7 @@ public class FootballTeamManagerImpl implements FootballTeamManager {
   }
 
   @Override
-  public void deleteFootballTeam(FootballTeam footballTeam) {
+  public void removeFootballTeam(FootballTeam footballTeam) {
     sessionFactory.getCurrentSession().delete(footballTeam);
   }
 

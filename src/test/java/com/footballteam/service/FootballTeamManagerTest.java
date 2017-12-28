@@ -69,7 +69,7 @@ public class FootballTeamManagerTest {
   @Test
   public void deleteFootballTeam_TEST() {
     FootballTeam footballTeam = footballTeamManager.getAllFootballTeams().get(0);
-    footballTeamManager.deleteFootballTeam(footballTeam);
+    footballTeamManager.removeFootballTeam(footballTeam);
     int counter = footballTeamManager.getAllFootballTeams().size();
     assertEquals(counter, 0);
     assertTrue(true);

@@ -71,5 +71,3 @@ tmp/
 local.properties
 .loadpath
 .recommenders
-db/
-.db/

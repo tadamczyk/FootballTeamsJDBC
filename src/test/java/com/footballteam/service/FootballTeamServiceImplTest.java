@@ -2,16 +2,21 @@ package com.footballteam.service;
 
 import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import com.footballteam.domain.FootballTeam;
-import com.footballteam.service.FootballTeamServiceImpl;
 
 public class FootballTeamServiceImplTest {
   private static final double _PRECISION = 0.01;
@@ -129,20 +134,22 @@ public class FootballTeamServiceImplTest {
   @Test
   public void shouldRemoveFootballTeamById() {
     footballTeams = footballTeamService.getAllFootballTeams();
-    FootballTeam tmp = footballTeams.get(0);
-    footballTeamService.removeFootballTeamById(footballTeams.get(0).getId());
+    int size = footballTeams.size();
+    FootballTeam tmp = footballTeams.get(footballTeams.size() - 1);
+    footballTeamService.removeFootballTeamById(footballTeams.get(footballTeams.size() - 1).getId());
     footballTeams = footballTeamService.getAllFootballTeams();
-    assertEquals(3, footballTeams.size());
+    assertEquals(size - 1, footballTeams.size());
     footballTeamService.addFootballTeam(tmp);
   }
 
   @Test
   public void shouldRemoveFootballTeamByName() {
     footballTeams = footballTeamService.getAllFootballTeams();
-    FootballTeam tmp = footballTeams.get(0);
-    footballTeamService.removeFootballTeamByName(footballTeams.get(0).getName());
+    int size = footballTeams.size();
+    FootballTeam tmp = footballTeams.get(footballTeams.size() - 1);
+    footballTeamService.removeFootballTeamByName(footballTeams.get(footballTeams.size() - 1).getName());
     footballTeams = footballTeamService.getAllFootballTeams();
-    assertEquals(3, footballTeams.size());
+    assertEquals(size - 1, footballTeams.size());
     footballTeamService.addFootballTeam(tmp);
   }
 

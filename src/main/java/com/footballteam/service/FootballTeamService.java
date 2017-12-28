@@ -1,6 +1,7 @@
 package com.footballteam.service;
 
 import java.util.List;
+
 import com.footballteam.domain.FootballTeam;
 
 public interface FootballTeamService {
@@ -19,7 +20,7 @@ public interface FootballTeamService {
   public int updateFootballTeamMarketValue(FootballTeam footballTeam, double marketValue);
 
   public int removeAllFootballTeams();
-  
+
   public int removeAllFootballTeamsFromList(List<FootballTeam> footballTeams);
 
   public int removeFootballTeamById(long id);

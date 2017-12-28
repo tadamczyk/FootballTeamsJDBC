@@ -24,17 +24,17 @@ public class FootballTeamServiceImplTest {
   private static FootballTeam EL = new FootballTeam("Everton Liverpool", 1878, 412000000.25);
 
   @BeforeClass
-  public static void checkOpenConnection() {
+  public static void shouldOpenConnection() {
     assertNotNull(footballTeamService.openConnection());
   }
 
   @AfterClass
-  public static void checkCloseConnection() {
+  public static void shouldCloseConnection() {
     assertNotNull(footballTeamService.closeConnection());
   }
 
   @Before
-  public void checkAddAllFootballTeam() {
+  public void shouldAddFourFootballTeams() {
     List<FootballTeam> footballTeamsInput = new ArrayList<FootballTeam>();
     footballTeamsInput.add(FCL);
     footballTeamsInput.add(MU);
@@ -45,39 +45,39 @@ public class FootballTeamServiceImplTest {
   }
 
   @After
-  public void checkRemoveAllFootballTeams() {
+  public void shouldRemoveFourFootballTeams() {
     footballTeamService.removeAllFootballTeams();
     assertTrue(footballTeamService.getAllFootballTeams().size() == 0);
   }
 
   @Test
-  public void checkCreateTable() {
+  public void shouldCreateTableFootballTeam() {
     assertNotNull(footballTeamService.createTable());
   }
 
   @Test
-  public void checkCreateStatements() {
+  public void shouldCreateAllStatements() {
     assertNotNull(footballTeamService.createStatements());
   }
 
   @Test
-  public void checkGetConnection() {
+  public void shouldGetCorrectConnection() {
     assertNotNull(footballTeamService.getConnection());
   }
 
   @Test
-  public void checkAddFootballTeam() {
+  public void shouldAddOneFootballTeam() {
     footballTeamService.addFootballTeam(EL);
     assertEquals(5, footballTeamService.getAllFootballTeams().size());
   }
 
   @Test
-  public void checkGetAllFootballTeams() {
+  public void shouldGetAllFootballTeams() {
     assertEquals(4, footballTeamService.getAllFootballTeams().size());
   }
 
   @Test
-  public void checkUpdateFootballTeam() {
+  public void shouldUpdateAllFieldsInFootballTeam() {
     String newName = "Arka Gdynia";
     int newYearOfEstablished = 1929;
     double newMarketValue = 1000000.99;
@@ -91,7 +91,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkUpdateFootballTeamName() {
+  public void shouldUpdateFootballTeamName() {
     String newName = "Legia Warsaw";
     footballTeams = footballTeamService.getAllFootballTeams();
     footballTeamService.updateFootballTeamName(footballTeams.get(0), newName);
@@ -100,7 +100,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkUpdateFootballTeamYearOfEstablished() {
+  public void shouldUpdateFootballTeamYearOfEstablished() {
     int newYearOfEstablished = 1916;
     footballTeams = footballTeamService.getAllFootballTeams();
     footballTeamService.updateFootballTeamYearOfEstablished(footballTeams.get(0), newYearOfEstablished);
@@ -109,7 +109,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkUpdateFootballTeamMarketValue() {
+  public void shouldUpdateFootballTeamMarketValue() {
     double newMarketValue = 16000000.02;
     footballTeams = footballTeamService.getAllFootballTeams();
     footballTeamService.updateFootballTeamMarketValue(footballTeams.get(0), newMarketValue);
@@ -118,7 +118,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkRemoveAllFootballTeamsFromList() {
+  public void shouldRemoveAllFootballTeamsFromList() {
     List<FootballTeam> footballTeamsInput = new ArrayList<FootballTeam>();
     footballTeamsInput.add(FCL);
     footballTeamsInput.add(MU);
@@ -127,7 +127,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkRemoveFootballTeamById() {
+  public void shouldRemoveFootballTeamById() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);
     footballTeamService.removeFootballTeamById(footballTeams.get(0).getId());
@@ -137,7 +137,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkRemoveFootballTeamByName() {
+  public void shouldRemoveFootballTeamByName() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);
     footballTeamService.removeFootballTeamByName(footballTeams.get(0).getName());
@@ -147,7 +147,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkFindById() {
+  public void shouldGetFootballTeamFindById() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);
     FootballTeam footballTeamRetrieved = footballTeamService.findById(tmp.getId());
@@ -157,7 +157,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkFindByName() {
+  public void shouldGetFootballTeamFindByName() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);
     FootballTeam footballTeamRetrieved = footballTeamService.findByName(tmp.getName());
@@ -167,7 +167,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkFindByYearOfEstablished() {
+  public void shouldGetFootballTeamFindByYearOfEstablished() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);
     FootballTeam footballTeamRetrieved = footballTeamService.findByYearOfEstablished(tmp.getYearOfEstablished());
@@ -177,7 +177,7 @@ public class FootballTeamServiceImplTest {
   }
 
   @Test
-  public void checkFindByMarketValue() {
+  public void shouldGetFootballTeamFindByMarketValue() {
     footballTeams = footballTeamService.getAllFootballTeams();
     FootballTeam tmp = footballTeams.get(0);
     FootballTeam footballTeamRetrieved = footballTeamService.findByMarketValue(tmp.getMarketValue());

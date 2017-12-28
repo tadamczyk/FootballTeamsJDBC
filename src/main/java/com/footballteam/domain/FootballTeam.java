@@ -1,26 +1,30 @@
 package com.footballteam.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@Entity
+@NamedQueries({ @NamedQuery(name = "footballTeam.all", query = "SELECT f FROM FootballTeam f"),
+    @NamedQuery(name = "footballTeam.byId", query = "SELECT f FROM FootballTeam f WHERE f.id = :id"),
+    @NamedQuery(name = "footballTeam.byName", query = "SELECT f FROM FootballTeam f WHERE f.name = :name") })
 public class FootballTeam {
-  private long id;
+
+  private Long id;
   private String name;
   private int yearOfEstablished;
   private double marketValue;
 
-  public FootballTeam() {
-  }
-
-  public FootballTeam(String name, int yearOfEstablished, double marketValue) {
-    super();
-    this.name = name;
-    this.yearOfEstablished = yearOfEstablished;
-    this.marketValue = marketValue;
-  }
-
-  public long getId() {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

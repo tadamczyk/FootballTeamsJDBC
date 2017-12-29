@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,45 +35,49 @@ public class FootballTeamManagerTest {
   FootballTeamManager footballTeamManager;
 
   @Test
-  public void addFootballTeam_TEST() {
-    FootballTeam footballTeam = new FootballTeam();
-    footballTeam.setName(NAME_1);
-    footballTeam.setYearOfEstablished(YOE_1);
-    footballTeam.setMarketValue(MV_1);
+  public void shouldAddOneFootballTeam() {
+    int counterBeforeAddOneFootballTeam = footballTeamManager.getAllFootballTeams().size();
+    FootballTeam footballTeam = new FootballTeam(NAME_1, YOE_1, MV_1);
     footballTeamManager.addFootballTeam(footballTeam);
-    int counter = footballTeamManager.getAllFootballTeams().size();
-    assertEquals(counter, 1);
-    assertTrue(true);
+    int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
+    assertEquals(counterBeforeAddOneFootballTeam + 1, footballTeamsCounter);
+    FootballTeam temporaryFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
+    footballTeamManager.removeFootballTeam(temporaryFootballTeam);
   }
 
   @Test
-  public void getAllFootballTeams_TEST() {
-    int counter = footballTeamManager.getAllFootballTeams().size();
-    assertThat(counter, either(is(0)).or(is(1)));
-    assertTrue(true);
+  public void shouldGetAllFootballTeams() {
+    int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
+    assertThat(footballTeamsCounter, either(is(0)).or(is(1)));
   }
 
   @Test
-  public void updateFootballTeam_TEST() {
-    FootballTeam footballTeam = footballTeamManager.getAllFootballTeams().get(0);
-    footballTeam.setName(UPD_NAME_1);
-    footballTeam.setYearOfEstablished(UPD_YOE_1);
-    footballTeam.setMarketValue(UPD_MV_1);
-    footballTeamManager.updateFootballTeam(footballTeam);
-    footballTeam = footballTeamManager.getAllFootballTeams().get(0);
-    assertEquals(footballTeam.getName(), UPD_NAME_1);
-    assertEquals(footballTeam.getYearOfEstablished(), UPD_YOE_1);
-    assertEquals(footballTeam.getMarketValue(), UPD_MV_1, 0.01);
-    assertTrue(true);
+  public void shouldUpdateAllFieldsFootballTeam() {
+    FootballTeam footballTeam = new FootballTeam("Arka Gdynia", 1929, 6500000);
+    footballTeamManager.addFootballTeam(footballTeam);
+    int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
+    FootballTeam retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
+    retrievedFootballTeam.setName(UPD_NAME_1);
+    retrievedFootballTeam.setYearOfEstablished(UPD_YOE_1);
+    retrievedFootballTeam.setMarketValue(UPD_MV_1);
+    footballTeamManager.updateFootballTeam(retrievedFootballTeam);
+    retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
+    assertEquals(retrievedFootballTeam.getName(), UPD_NAME_1);
+    assertEquals(retrievedFootballTeam.getYearOfEstablished(), UPD_YOE_1);
+    assertEquals(retrievedFootballTeam.getMarketValue(), UPD_MV_1, 0.01);
+    FootballTeam temporaryFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
+    footballTeamManager.removeFootballTeam(temporaryFootballTeam);
   }
 
   @Test
-  public void deleteFootballTeam_TEST() {
-    FootballTeam footballTeam = footballTeamManager.getAllFootballTeams().get(0);
-    footballTeamManager.removeFootballTeam(footballTeam);
-    int counter = footballTeamManager.getAllFootballTeams().size();
-    assertEquals(counter, 0);
-    assertTrue(true);
+  public void shouldRemoveOneAddedFootballTeam() {
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    footballTeamManager.addFootballTeam(footballTeam);
+    int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
+    FootballTeam retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
+    footballTeamManager.removeFootballTeam(retrievedFootballTeam);
+    footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
+    assertThat(footballTeamsCounter, either(is(0)).or(is(1)));
   }
 
 }

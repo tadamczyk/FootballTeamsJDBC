@@ -10,6 +10,17 @@ import javax.persistence.NamedQuery;
 @NamedQuery(name = "footballTeam.all", query = "SELECT f FROM FootballTeam f")
 public class FootballTeam {
 
+  public FootballTeam() {
+    super();
+  }
+
+  public FootballTeam(String name, int yearOfEstablished, double marketValue) {
+    super();
+    this.name = name;
+    this.yearOfEstablished = yearOfEstablished;
+    this.marketValue = marketValue;
+  }
+
   private Long id;
   private String name;
   private int yearOfEstablished;

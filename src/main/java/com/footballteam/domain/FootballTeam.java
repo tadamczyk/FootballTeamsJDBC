@@ -4,10 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "footballTeam.all", query = "SELECT f FROM FootballTeam f")
+@NamedQueries({ @NamedQuery(name = "footballTeam.all", query = "SELECT f FROM FootballTeam f"),
+    @NamedQuery(name = "footballTeam.byName", query = "SELECT f FROM FootballTeam f WHERE f.name = :name") })
 public class FootballTeam {
 
   public FootballTeam() {
@@ -58,6 +60,32 @@ public class FootballTeam {
 
   public void setMarketValue(double marketValue) {
     this.marketValue = marketValue;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    FootballTeam other = (FootballTeam) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
+    if (Double.doubleToLongBits(marketValue) != Double.doubleToLongBits(other.marketValue))
+      return false;
+    if (name == null) {
+      if (other.name != null)
+        return false;
+    } else if (!name.equals(other.name))
+      return false;
+    if (yearOfEstablished != other.yearOfEstablished)
+      return false;
+    return true;
   }
 
 }

@@ -4,9 +4,7 @@ import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +51,7 @@ public class FootballTeamManagerTest {
 
   @Test
   public void shouldUpdateAllFieldsFootballTeam() {
-    FootballTeam footballTeam = new FootballTeam("Arka Gdynia", 1929, 6500000);
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
     footballTeamManager.addFootballTeam(footballTeam);
     int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
     FootballTeam retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
@@ -78,6 +76,26 @@ public class FootballTeamManagerTest {
     footballTeamManager.removeFootballTeam(retrievedFootballTeam);
     footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
     assertThat(footballTeamsCounter, either(is(0)).or(is(1)));
+  }
+
+  @Test
+  public void shouldFindCorrectlyFootballTeamById() {
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    footballTeamManager.addFootballTeam(footballTeam);
+    long id = footballTeam.getId();
+    FootballTeam retrievedFootballTeam = footballTeamManager.findById(id);
+    assertEquals(retrievedFootballTeam, footballTeam);
+    footballTeamManager.removeFootballTeam(retrievedFootballTeam);
+  }
+
+  @Test
+  public void shouldFindCorrectlyFootballTeamByName() {
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    footballTeamManager.addFootballTeam(footballTeam);
+    String name = footballTeam.getName();
+    FootballTeam retrievedFootballTeam = footballTeamManager.findByName(name);
+    assertEquals(retrievedFootballTeam, footballTeam);
+    footballTeamManager.removeFootballTeam(retrievedFootballTeam);
   }
 
 }

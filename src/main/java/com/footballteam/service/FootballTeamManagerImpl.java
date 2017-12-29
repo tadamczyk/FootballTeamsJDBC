@@ -52,7 +52,8 @@ public class FootballTeamManagerImpl implements FootballTeamManager {
 
   @Override
   public FootballTeam findByName(String name) {
-    return (FootballTeam) sessionFactory.getCurrentSession().get(FootballTeam.class, name);
+    return (FootballTeam) sessionFactory.getCurrentSession().getNamedQuery("footballTeam.byName")
+        .setString("name", name).uniqueResult();
   }
 
 }

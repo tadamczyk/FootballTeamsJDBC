@@ -1,16 +1,30 @@
 package com.footballteam.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "footballTeam.all", query = "SELECT f FROM FootballTeam f"),
     @NamedQuery(name = "footballTeam.byName", query = "SELECT f FROM FootballTeam f WHERE f.name = :name") })
 public class FootballTeam {
+  private Long id;
+  private String name;
+  private int yearOfEstablished;
+  private double marketValue;
+  private List<Player> players = new ArrayList<Player>();
+  private League league;
 
   public FootballTeam() {
     super();
@@ -23,11 +37,6 @@ public class FootballTeam {
     this.marketValue = marketValue;
   }
 
-  private Long id;
-  private String name;
-  private int yearOfEstablished;
-  private double marketValue;
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   public Long getId() {
@@ -38,6 +47,7 @@ public class FootballTeam {
     this.id = id;
   }
 
+  @Column(unique = true)
   public String getName() {
     return name;
   }
@@ -60,6 +70,24 @@ public class FootballTeam {
 
   public void setMarketValue(double marketValue) {
     this.marketValue = marketValue;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  public List<Player> getPlayers() {
+    return players;
+  }
+
+  public void setPlayers(List<Player> players) {
+    this.players = players;
+  }
+
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  public League getLeague() {
+    return league;
+  }
+
+  public void setLeague(League league) {
+    this.league = league;
   }
 
 }

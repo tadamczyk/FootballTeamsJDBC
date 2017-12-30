@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +101,52 @@ public class FootballTeamManagerTest {
   }
 
   @Test
+  public void shouldAddOnePlayer() {
+    int counterBeforeAddOnePlayer = footballTeamManager.getAllPlayers().size();
+    Player player = new Player("Wayne", "Rooney", 1985, new FootballTeam());
+    footballTeamManager.addPlayer(player);
+    int playersCounter = footballTeamManager.getAllPlayers().size();
+    assertEquals(counterBeforeAddOnePlayer + 1, playersCounter);
+    Player temporaryPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
+    footballTeamManager.removePlayer(temporaryPlayer);
+  }
+
+  @Test
+  public void shouldGetAllPlayers() {
+    int playersCounter = footballTeamManager.getAllPlayers().size();
+    assertThat(playersCounter, either(is(0)).or(is(1)));
+  }
+
+  @Test
+  public void shouldUpdateAllFieldsPlayer() {
+    Player player = new Player("Wayne", "Rooney", 1985, new FootballTeam());
+    footballTeamManager.addPlayer(player);
+    int playersCounter = footballTeamManager.getAllPlayers().size();
+    Player retrievedPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
+    retrievedPlayer.setFirstname("David");
+    retrievedPlayer.setLastname("De Gea");
+    retrievedPlayer.setYearOfBirth(1990);
+    footballTeamManager.updatePlayer(retrievedPlayer);
+    retrievedPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
+    assertEquals(retrievedPlayer.getFirstname(), "David");
+    assertEquals(retrievedPlayer.getLastname(), "De Gea");
+    assertEquals(retrievedPlayer.getYearOfBirth(), 1990);
+    Player temporaryPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
+    footballTeamManager.removePlayer(temporaryPlayer);
+  }
+
+  @Test
+  public void shouldRemoveOneAddedPlayer() {
+    Player player = new Player("Wayne", "Rooney", 1985, new FootballTeam());
+    footballTeamManager.addPlayer(player);
+    int playersCounter = footballTeamManager.getAllPlayers().size();
+    Player retrievedPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
+    footballTeamManager.removePlayer(retrievedPlayer);
+    playersCounter = footballTeamManager.getAllPlayers().size();
+    assertThat(playersCounter, either(is(0)).or(is(1)));
+  }
+
+  @Test
   public void shouldFindCorrectlyPlayerById() {
     Player player = new Player("Wayne", "Rooney", 1985, new FootballTeam());
     footballTeamManager.addPlayer(player);
@@ -110,7 +155,7 @@ public class FootballTeamManagerTest {
     assertEquals(retrievedPlayer, player);
     footballTeamManager.removePlayer(retrievedPlayer);
   }
-  
+
   @Test
   public void shouldFindCorrectlyLeagueById() {
     League league = new League("Premier League", "England", 1992);

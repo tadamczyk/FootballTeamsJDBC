@@ -23,18 +23,19 @@ public class FootballTeam {
   private String name;
   private int yearOfEstablished;
   private double marketValue;
-  private List<Player> players = new ArrayList<Player>();
   private League league;
+  private List<Player> players = new ArrayList<Player>();
 
   public FootballTeam() {
     super();
   }
 
-  public FootballTeam(String name, int yearOfEstablished, double marketValue) {
+  public FootballTeam(String name, int yearOfEstablished, double marketValue, League league) {
     super();
     this.name = name;
     this.yearOfEstablished = yearOfEstablished;
     this.marketValue = marketValue;
+    this.league = league;
   }
 
   @Id
@@ -72,15 +73,6 @@ public class FootballTeam {
     this.marketValue = marketValue;
   }
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  public List<Player> getPlayers() {
-    return players;
-  }
-
-  public void setPlayers(List<Player> players) {
-    this.players = players;
-  }
-
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   public League getLeague() {
     return league;
@@ -88,6 +80,15 @@ public class FootballTeam {
 
   public void setLeague(League league) {
     this.league = league;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  public List<Player> getPlayers() {
+    return players;
+  }
+
+  public void setPlayers(List<Player> players) {
+    this.players = players;
   }
 
 }

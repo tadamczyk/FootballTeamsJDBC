@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.footballteam.domain.FootballTeam;
+import com.footballteam.domain.League;
+import com.footballteam.domain.Player;
 
 @Component
 @Transactional
@@ -54,6 +56,58 @@ public class FootballTeamManagerImpl implements FootballTeamManager {
   public FootballTeam findByName(String name) {
     return (FootballTeam) sessionFactory.getCurrentSession().getNamedQuery("footballTeam.byName")
         .setString("name", name).uniqueResult();
+  }
+
+  @Override
+  public void addPlayer(Player player) {
+    sessionFactory.getCurrentSession().persist(player);
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public List<Player> getAllPlayers() {
+    return sessionFactory.getCurrentSession().getNamedQuery("player.all").list();
+  }
+
+  @Override
+  public void updatePlayer(Player player) {
+    sessionFactory.getCurrentSession().saveOrUpdate(player);
+  }
+
+  @Override
+  public void removePlayer(Player player) {
+    sessionFactory.getCurrentSession().delete(player);
+  }
+
+  @Override
+  public Player findPlayerById(Long id) {
+    return (Player) sessionFactory.getCurrentSession().get(Player.class, id);
+  }
+
+  @Override
+  public void addLeague(League league) {
+    sessionFactory.getCurrentSession().persist(league);
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public List<League> getAllLeagues() {
+    return sessionFactory.getCurrentSession().getNamedQuery("league.all").list();
+  }
+
+  @Override
+  public void updateLeague(League league) {
+    sessionFactory.getCurrentSession().saveOrUpdate(league);
+  }
+
+  @Override
+  public void removeLeague(League league) {
+    sessionFactory.getCurrentSession().delete(league);
+  }
+
+  @Override
+  public League findLeagueById(Long id) {
+    return (League) sessionFactory.getCurrentSession().get(League.class, id);
   }
 
 }

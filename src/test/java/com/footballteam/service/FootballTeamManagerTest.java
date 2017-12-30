@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.footballteam.domain.FootballTeam;
+import com.footballteam.domain.League;
+import com.footballteam.domain.Player;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
@@ -35,7 +38,7 @@ public class FootballTeamManagerTest {
   @Test
   public void shouldAddOneFootballTeam() {
     int counterBeforeAddOneFootballTeam = footballTeamManager.getAllFootballTeams().size();
-    FootballTeam footballTeam = new FootballTeam(NAME_1, YOE_1, MV_1);
+    FootballTeam footballTeam = new FootballTeam(NAME_1, YOE_1, MV_1, new League());
     footballTeamManager.addFootballTeam(footballTeam);
     int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
     assertEquals(counterBeforeAddOneFootballTeam + 1, footballTeamsCounter);
@@ -51,7 +54,7 @@ public class FootballTeamManagerTest {
 
   @Test
   public void shouldUpdateAllFieldsFootballTeam() {
-    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000, new League());
     footballTeamManager.addFootballTeam(footballTeam);
     int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
     FootballTeam retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
@@ -69,7 +72,7 @@ public class FootballTeamManagerTest {
 
   @Test
   public void shouldRemoveOneAddedFootballTeam() {
-    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000, new League());
     footballTeamManager.addFootballTeam(footballTeam);
     int footballTeamsCounter = footballTeamManager.getAllFootballTeams().size();
     FootballTeam retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
@@ -80,7 +83,7 @@ public class FootballTeamManagerTest {
 
   @Test
   public void shouldFindCorrectlyFootballTeamById() {
-    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000, new League());
     footballTeamManager.addFootballTeam(footballTeam);
     long id = footballTeam.getId();
     FootballTeam retrievedFootballTeam = footballTeamManager.findById(id);
@@ -90,12 +93,22 @@ public class FootballTeamManagerTest {
 
   @Test
   public void shouldFindCorrectlyFootballTeamByName() {
-    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000);
+    FootballTeam footballTeam = new FootballTeam("FC Barcelona", 1899, 650000000, new League());
     footballTeamManager.addFootballTeam(footballTeam);
     String name = footballTeam.getName();
     FootballTeam retrievedFootballTeam = footballTeamManager.findByName(name);
     assertEquals(retrievedFootballTeam, footballTeam);
     footballTeamManager.removeFootballTeam(retrievedFootballTeam);
+  }
+
+  @Test
+  public void shouldFindCorrectlyPlayerById() {
+    Player player = new Player("Wayne", "Rooney", 1985, new FootballTeam());
+    footballTeamManager.addPlayer(player);
+    long id = player.getId();
+    Player retrievedPlayer = footballTeamManager.findPlayerById(id);
+    assertEquals(retrievedPlayer, player);
+    footballTeamManager.removePlayer(retrievedPlayer);
   }
 
 }

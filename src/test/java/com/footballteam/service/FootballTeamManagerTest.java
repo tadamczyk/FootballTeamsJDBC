@@ -110,5 +110,15 @@ public class FootballTeamManagerTest {
     assertEquals(retrievedPlayer, player);
     footballTeamManager.removePlayer(retrievedPlayer);
   }
+  
+  @Test
+  public void shouldFindCorrectlyLeagueById() {
+    League league = new League("Premier League", "England", 1992);
+    footballTeamManager.addLeague(league);
+    long id = league.getId();
+    League retrievedLeague = footballTeamManager.findLeagueById(id);
+    assertEquals(retrievedLeague, league);
+    footballTeamManager.removeLeague(retrievedLeague);
+  }
 
 }

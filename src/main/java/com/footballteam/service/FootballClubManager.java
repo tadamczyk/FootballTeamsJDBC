@@ -6,7 +6,7 @@ import com.footballteam.domain.FootballTeam;
 import com.footballteam.domain.League;
 import com.footballteam.domain.Player;
 
-public interface FootballTeamManager {
+public interface FootballClubManager {
 
   void addFootballTeam(FootballTeam footballTeam);
 

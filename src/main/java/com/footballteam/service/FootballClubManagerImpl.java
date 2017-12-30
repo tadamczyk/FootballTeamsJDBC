@@ -13,7 +13,7 @@ import com.footballteam.domain.Player;
 
 @Component
 @Transactional
-public class FootballTeamManagerImpl implements FootballTeamManager {
+public class FootballClubManagerImpl implements FootballClubManager {
 
   @Autowired
   private SessionFactory sessionFactory;

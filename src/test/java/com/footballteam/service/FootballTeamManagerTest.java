@@ -60,11 +60,13 @@ public class FootballTeamManagerTest {
     retrievedFootballTeam.setName(UPD_NAME_1);
     retrievedFootballTeam.setYearOfEstablished(UPD_YOE_1);
     retrievedFootballTeam.setMarketValue(UPD_MV_1);
+    retrievedFootballTeam.setLeague(new League("La Liga", "Spain", 1900));
     footballTeamManager.updateFootballTeam(retrievedFootballTeam);
     retrievedFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
     assertEquals(retrievedFootballTeam.getName(), UPD_NAME_1);
     assertEquals(retrievedFootballTeam.getYearOfEstablished(), UPD_YOE_1);
     assertEquals(retrievedFootballTeam.getMarketValue(), UPD_MV_1, 0.01);
+    assertEquals(retrievedFootballTeam.getLeague().getName(), "La Liga");
     FootballTeam temporaryFootballTeam = footballTeamManager.getAllFootballTeams().get(footballTeamsCounter - 1);
     footballTeamManager.removeFootballTeam(temporaryFootballTeam);
   }
@@ -126,11 +128,13 @@ public class FootballTeamManagerTest {
     retrievedPlayer.setFirstname("David");
     retrievedPlayer.setLastname("De Gea");
     retrievedPlayer.setYearOfBirth(1990);
+    retrievedPlayer.setFootballTeam(new FootballTeam(UPD_NAME_1, UPD_YOE_1, UPD_MV_1, new League()));
     footballTeamManager.updatePlayer(retrievedPlayer);
     retrievedPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
     assertEquals(retrievedPlayer.getFirstname(), "David");
     assertEquals(retrievedPlayer.getLastname(), "De Gea");
     assertEquals(retrievedPlayer.getYearOfBirth(), 1990);
+    assertEquals(retrievedPlayer.getFootballTeam().getName(), UPD_NAME_1);
     Player temporaryPlayer = footballTeamManager.getAllPlayers().get(playersCounter - 1);
     footballTeamManager.removePlayer(temporaryPlayer);
   }
@@ -154,6 +158,52 @@ public class FootballTeamManagerTest {
     Player retrievedPlayer = footballTeamManager.findPlayerById(id);
     assertEquals(retrievedPlayer, player);
     footballTeamManager.removePlayer(retrievedPlayer);
+  }
+
+  @Test
+  public void shouldAddOneLeague() {
+    int counterBeforeAddOneLeague = footballTeamManager.getAllLeagues().size();
+    League league = new League("Premier League", "England", 1992);
+    footballTeamManager.addLeague(league);
+    int leaguesCounter = footballTeamManager.getAllLeagues().size();
+    assertEquals(counterBeforeAddOneLeague + 1, leaguesCounter);
+    League temporaryLeague = footballTeamManager.getAllLeagues().get(leaguesCounter - 1);
+    footballTeamManager.removeLeague(temporaryLeague);
+  }
+
+  @Test
+  public void shouldGetAllLeagues() {
+    int leaguesCounter = footballTeamManager.getAllLeagues().size();
+    assertThat(leaguesCounter, either(is(0)).or(is(1)));
+  }
+
+  @Test
+  public void shouldUpdateAllFieldsLeague() {
+    League league = new League("Premier League", "England", 1992);
+    footballTeamManager.addLeague(league);
+    int leaguesCounter = footballTeamManager.getAllLeagues().size();
+    League retrievedLeague = footballTeamManager.getAllLeagues().get(leaguesCounter - 1);
+    retrievedLeague.setName("La Liga");
+    retrievedLeague.setCountry("Spain");
+    retrievedLeague.setYearOfEstablished(1900);
+    footballTeamManager.updateLeague(retrievedLeague);
+    retrievedLeague = footballTeamManager.getAllLeagues().get(leaguesCounter - 1);
+    assertEquals(retrievedLeague.getName(), "La Liga");
+    assertEquals(retrievedLeague.getCountry(), "Spain");
+    assertEquals(retrievedLeague.getYearOfEstablished(), 1900);
+    League temporaryLeague = footballTeamManager.getAllLeagues().get(leaguesCounter - 1);
+    footballTeamManager.removeLeague(temporaryLeague);
+  }
+
+  @Test
+  public void shouldRemoveOneAddedLeague() {
+    League league = new League("Premier League", "England", 1992);
+    footballTeamManager.addLeague(league);
+    int leaguesCounter = footballTeamManager.getAllLeagues().size();
+    League retrievedLeague = footballTeamManager.getAllLeagues().get(leaguesCounter - 1);
+    footballTeamManager.removeLeague(retrievedLeague);
+    leaguesCounter = footballTeamManager.getAllLeagues().size();
+    assertThat(leaguesCounter, either(is(0)).or(is(1)));
   }
 
   @Test

@@ -5,6 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,11 +168,11 @@ public class FootballClubManagerTest {
   public void shouldRemoveOneAddedPlayer() {
     Player player = new Player(ROONEY_FIRSTNAME, ROONEY_LASTNAME, ROONEY_YOB, new FootballTeam());
     manager.addPlayer(player);
-    int playersCounter = manager.getAllPlayers().size();
-    Player retrievedPlayer = manager.getAllPlayers().get(playersCounter - 1);
+    int counterBeforeRemoveOnePlayer = manager.getAllPlayers().size();
+    Player retrievedPlayer = manager.getAllPlayers().get(counterBeforeRemoveOnePlayer - 1);
     manager.removePlayer(retrievedPlayer);
-    playersCounter = manager.getAllPlayers().size();
-    assertThat(playersCounter, either(is(0)).or(is(1)));
+    int playersCounter = manager.getAllPlayers().size();
+    assertEquals(counterBeforeRemoveOnePlayer - 1, playersCounter);
   }
 
   @Test
@@ -236,6 +239,38 @@ public class FootballClubManagerTest {
     League retrievedLeague = manager.findLeagueById(id);
     assertEquals(retrievedLeague, league);
     manager.removeLeague(retrievedLeague);
+  }
+
+  @Test
+  public void shouldReturnCorrectlyNumberOfTeamsInLeague() {
+    League league = new League();
+    FootballTeam team1 = new FootballTeam();
+    FootballTeam team2 = new FootballTeam();
+    List<FootballTeam> footballTeams = new ArrayList<FootballTeam>();
+    footballTeams.add(team1);
+    footballTeams.add(team2);
+    league.setFootballTeams(footballTeams);
+    manager.addLeague(league);
+    League retrievedLeague = manager.getAllLeagues().get(manager.getAllLeagues().size() - 1);
+    assertEquals(retrievedLeague.getFootballTeams().size(), 2);
+    manager.removeLeague(retrievedLeague);
+  }
+
+  @Test
+  public void shouldReturnCorrectlyNumberOfPlayersInFootballTeam() {
+    FootballTeam footballTeam = new FootballTeam();
+    Player player1 = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+    List<Player> players = new ArrayList<Player>();
+    players.add(player1);
+    players.add(player2);
+    players.add(player3);
+    footballTeam.setPlayers(players);
+    manager.addFootballTeam(footballTeam);
+    FootballTeam retrievedFootballTeam = manager.getAllFootballTeams().get(manager.getAllFootballTeams().size() - 1);
+    assertEquals(retrievedFootballTeam.getPlayers().size(), 3);
+    manager.removeFootballTeam(retrievedFootballTeam);
   }
 
 }
